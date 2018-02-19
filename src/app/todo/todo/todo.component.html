@@ -9,7 +9,7 @@
     </div>
   </div>
 
-
+  <!-- 詳細 -->
   <div class="card card-block card-header" [collapse]="!hasDetail">
     <div class="form-group">
       <label for="description">
@@ -25,32 +25,43 @@
       <input type="date" class="form-control" formControlName="date" />
     </div>
   </div>
-
 </form>
+
 <div class=" row ">
-  <div class="col-sm-2 ">
+  <div class="col-2 ">
     <button class="createBtn btn btn-success " [disabled]="this.todoForm.invalid" (click)="onSaveTodoItem()">作成</button>
   </div>
 </div>
 <hr>
-<div class="row itemListArea ">
-  <accordion class="col-sm-12">
-    <accordion-group *ngFor="let item of itemList; let i=index;">
-      <div accordion-heading [class.isComplete]="item.isComplete">
+
+<!-- todoリスト表示 -->
+<div class="col-12 itemListArea ">
+  <div *ngFor="let item of itemList; let i=index;">
+
+    <div class="row border itme-header">
+      <label class="col-1 custom-control custom-checkbox">
+        <input class="custom-control-input" type="checkbox" [(ngModel)]="item.isComplete">
+        <span class="custom-control-indicator"></span>
+      </label>
+      <div class="col-10  title" (click)="header.isOpend = !header.isOpend" [class.isComplete]="item.isComplete" isOpend="false"
+        #header>
         {{item.title}}
       </div>
-      <div>
+      <button type="button" class="close col-1" aria-label="Close" (click)="onDeleteItem(item)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="row border" *ngIf="header.isOpend">
+      <div class="col-12">
         <strong>詳細：</strong>
         <pre>{{item.description ? item.description : "-"}}</pre>
       </div>
-      <div>
+      <div class="col-12">
         <strong>日付：</strong>
         <span>{{item.date ? item.date : "-"}}</span>
       </div>
-      <div>
-        <button class="btn btn-success" (click)="item.isComplete = !item.isComplete ">{{item.isComplete ? "未完了に戻す" : "完了にする"}}</button>
-        <button class="btn btn-danger" (click)="onDeleteItem(i)">削除</button>
-      </div>
-    </accordion-group>
-  </accordion>
+    </div>
+
+  </div>
 </div>

@@ -1,7 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 
-import { TodoItem } from '../interface/todo-item';
+import {
+  TodoItem
+} from '../interface/todo-item';
 
 @Component({
   selector: 'app-todo',
@@ -14,14 +24,12 @@ export class TodoComponent implements OnInit {
   public hasDetail = false;
 
   // アイテムリスト
-  public itemList: Array<TodoItem> = new Array<TodoItem>();
+  public itemList: Array < TodoItem > = new Array < TodoItem > ();
 
   // 入力フォーム
   public todoForm: FormGroup;
 
-  constructor(
-    protected formBuilder: FormBuilder
-  ) { }
+  constructor(protected formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.createForm();
@@ -30,10 +38,8 @@ export class TodoComponent implements OnInit {
   createForm(): void {
     // Form の作成と初期値設定をします。
     this.todoForm = this.formBuilder.group({
-      title: ['',
-        [
-          Validators.required
-        ]
+      title: [
+        '', [Validators.required]
       ],
       description: [''],
       date: [''],
@@ -51,7 +57,8 @@ export class TodoComponent implements OnInit {
     };
 
     if (this.hasDetail) {
-      item.description = this.todoForm.get('description').value;
+      item.description = this.todoForm
+        .get('description').value;
       item.date = this.todoForm.get('date').value;
     }
 
@@ -66,7 +73,7 @@ export class TodoComponent implements OnInit {
   }
 
   // 指定した要素を削除
-  onDeleteItem(index: number): void {
-    this.itemList.splice(index, 1);
+  onDeleteItem(item: TodoItem): void {
+    this.itemList = this.itemList.filter(i => i !== item);
   }
 }

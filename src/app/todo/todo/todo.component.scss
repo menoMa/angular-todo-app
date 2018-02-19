@@ -1,3 +1,30 @@
 .isComplete {
   text-decoration: line-through;
 }
+
+.card-block {
+  padding: 10px;
+}
+
+.title {
+  font-size: 1.5rem;
+  padding: 10px;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.itme-header {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.custom-control-indicator {
+  width: 1.5rem;
+  height: 1.5rem;
+  top: 1rem;
+  left: 1rem;
+}
+
+.custom-control {
+  margin-right: 0;
+  padding-left: 0;
+}
