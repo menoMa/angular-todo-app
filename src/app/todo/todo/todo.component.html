@@ -36,11 +36,11 @@
 
 <!-- todoリスト表示 -->
 <div class="col-12 itemListArea ">
-  <div *ngFor="let item of itemList; let i=index;">
+  <div *ngFor="let item of this.todoService.todoList() ; let i=index;">
 
     <div class="row border itme-header">
       <label class="col-1 custom-control custom-checkbox">
-        <input class="custom-control-input" type="checkbox" [(ngModel)]="item.isComplete">
+        <input class="custom-control-input" type="checkbox" [checked]="item.isComplete" (click)="updateIsComplete(item)">
         <span class="custom-control-indicator"></span>
       </label>
       <div class="col-10  title" (click)="header.isOpend = !header.isOpend" [class.isComplete]="item.isComplete" isOpend="false"

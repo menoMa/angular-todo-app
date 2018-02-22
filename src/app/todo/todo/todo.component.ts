@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TodoService } from '../../common/service/todo.service';
 
 import { TodoItem } from '../interface/todo-item';
+import { importType } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-todo',
@@ -12,14 +14,18 @@ export class TodoComponent implements OnInit {
   // 詳細入力フォームが表示されているか
   public hasDetail = false;
   // アイテムリスト
-  public itemList: Array<TodoItem> = new Array<TodoItem>();
+  // public itemList: Array<TodoItem> = new Array<TodoItem>();
   // 入力フォーム
   public todoForm: FormGroup;
 
-  constructor(protected formBuilder: FormBuilder) { }
+  constructor(
+    protected formBuilder: FormBuilder,
+    protected todoService: TodoService
+  ) { }
 
   ngOnInit() {
     this.createForm();
+    this.todoService.fetchAll();
   }
 
   createForm(): void {
@@ -37,6 +43,7 @@ export class TodoComponent implements OnInit {
   // todoItem を 保存します
   onSaveTodoItem(): void {
     const item: TodoItem = {
+      _id: null,
       title: this.todoForm.get('title').value,
       isComplete: false,
       description: null,
@@ -48,8 +55,19 @@ export class TodoComponent implements OnInit {
       item.date = this.todoForm.get('date').value;
     }
 
-    this.itemList.push(item);
-    this.clearForm();
+    this.todoService.createTodo(item).then((data) => {
+      console.log(data);
+      item._id = data.id;
+
+      this.todoService.todoList().push(item);
+      this.clearForm();
+    });
+  }
+
+  // 完了/未完了の状態を更新
+  updateIsComplete(item: TodoItem): void {
+    item.isComplete = !item.isComplete;
+    this.todoService.updateTodo(item);
   }
 
   // フォームの値をリセット
@@ -59,6 +77,6 @@ export class TodoComponent implements OnInit {
 
   // 指定した要素を削除
   onDeleteItem(item: TodoItem): void {
-    this.itemList = this.itemList.filter(i => i !== item);
+    this.todoService.deleteTodo(item._id);
   }
 }
