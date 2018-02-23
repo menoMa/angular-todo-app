@@ -6,6 +6,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 import { TodoRoutingModule } from './todo-routing.module';
 import { TodoComponent } from './todo/todo.component';
+import { TodoListComponent } from './todo-list/todo-list.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { TodoComponent } from './todo/todo.component';
     CollapseModule.forRoot(),
     TodoRoutingModule
   ],
-  declarations: [TodoComponent]
+  declarations: [TodoComponent, TodoListComponent]
 })
 export class TodoModule { }

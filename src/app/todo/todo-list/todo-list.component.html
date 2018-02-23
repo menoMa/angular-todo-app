@@ -1,0 +1,54 @@
+<div *ngIf="!isEdit">
+  <div class="row border itme-header">
+    <label class=" col-1 custom-control custom-checkbox ">
+      <input class="custom-control-input " type="checkbox " [checked]="todo.isComplete " (click)="updateIsComplete(todo) ">
+      <span class="custom-control-indicator "></span>
+    </label>
+    <div class="col-9 title " (click)="isOpend=!isOpend " [class.isComplete]="todo.isComplete ">
+      {{todo.title}}
+    </div>
+    <button type="button" class="col-1 btn btn-info btn-sm" (click)="isEdit = !isEdit">編集</button>
+    <button type="button " class="close col-1 " aria-label="Close " (click)="onDeleteItem(todo) ">
+      <span aria-hidden="true ">&times;</span>
+    </button>
+  </div>
+
+  <div class="row border " *ngIf="isOpend ">
+    <div class="col-12 ">
+      <strong>詳細：</strong>
+      <pre>{{todo.description ? todo.description : "- "}}</pre>
+    </div>
+    <div class="col-12 ">
+      <strong>日付：</strong>
+      <span>{{todo.date ? todo.date : "- "}}</span>
+    </div>
+  </div>
+
+</div>
+<div *ngIf="isEdit">
+  <div class="row border itme-header">
+    <label class=" col-1 custom-control custom-checkbox ">
+      <input class="custom-control-input " type="checkbox " [checked]="todo.isComplete " (click)="updateIsComplete(todo) ">
+      <span class="custom-control-indicator "></span>
+    </label>
+    <div class="col-9 title " [class.isComplete]="todo.isComplete ">
+      {{todo.title}}
+    </div>
+    <button type="button" class="col-1 btn btn-info btn-sm" (click)="isEdit = !isEdit">保存</button>
+    <button type="button " class="close col-1 " aria-label="Close " (click)="onDeleteItem(todo) ">
+      <span aria-hidden="true ">&times;</span>
+    </button>
+  </div>
+
+  <div class="row border ">
+    <div class="col-12 ">
+      <strong>詳細：</strong>
+      <pre>{{todo.description ? todo.description : "- "}}</pre>
+    </div>
+    <div class="col-12 ">
+      <strong>日付：</strong>
+      <span>{{todo.date ? todo.date : "- "}}</span>
+    </div>
+  </div>
+
+</div>

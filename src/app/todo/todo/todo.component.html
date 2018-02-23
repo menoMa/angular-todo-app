@@ -34,34 +34,8 @@
 </div>
 <hr>
 
-<!-- todoリスト表示 -->
+
 <div class="col-12 itemListArea ">
-  <div *ngFor="let item of this.todoService.todoList() ; let i=index;">
-
-    <div class="row border itme-header">
-      <label class="col-1 custom-control custom-checkbox">
-        <input class="custom-control-input" type="checkbox" [checked]="item.isComplete" (click)="updateIsComplete(item)">
-        <span class="custom-control-indicator"></span>
-      </label>
-      <div class="col-10  title" (click)="header.isOpend = !header.isOpend" [class.isComplete]="item.isComplete" isOpend="false"
-        #header>
-        {{item.title}}
-      </div>
-      <button type="button" class="close col-1" aria-label="Close" (click)="onDeleteItem(item)">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="row border" *ngIf="header.isOpend">
-      <div class="col-12">
-        <strong>詳細：</strong>
-        <pre>{{item.description ? item.description : "-"}}</pre>
-      </div>
-      <div class="col-12">
-        <strong>日付：</strong>
-        <span>{{item.date ? item.date : "-"}}</span>
-      </div>
-    </div>
-
-  </div>
+  <!-- todoリスト表示 -->
+  <app-todo-list *ngFor="let item of this.todoService.todoList()" [todo]="item"></app-todo-list>
 </div>
