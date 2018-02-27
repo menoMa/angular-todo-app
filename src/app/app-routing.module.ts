@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+// パスを定義します。ここでは/todoにリダイレクトするように設定しています。
 const routes: Routes = [
   {
     path: '',
@@ -9,6 +10,9 @@ const routes: Routes = [
   }
 ];
 
+/**
+ * アプリのルーティングモジュールです。
+ */
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

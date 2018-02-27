@@ -1,39 +1,56 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { TodoItem } from '../interface/todo-item';
+/**
+ *  Todoオブジェクト
+ */
+interface TodoItem {
+  /** 件名 */
+  title: string;
+  /** 詳細 */
+  description: string;
+  /** 完了/未完了 状態 */
+  isComplete: boolean;
+  /** 締切日時 */
+  date: string;
+}
 
+/**
+ * ToDoアプリのロジックを定義します
+ */
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.scss']
 })
 export class TodoComponent implements OnInit {
-
   // 詳細入力フォームが表示されているか
   public hasDetail = false;
-
-  // アイテムリスト
+  // ToDoリスト
   public itemList: Array<TodoItem> = new Array<TodoItem>();
-
-  // 入力フォーム
+  // 入力フォームの状態
   public todoForm: FormGroup;
 
   constructor(
+    // 入力フォームの状態管理オブジェクト（FormGroup）を生成するためのビルダーです
     protected formBuilder: FormBuilder
   ) { }
 
+  /**
+   * 初期化時に呼び出されるメソッドです
+   * ngOnInitはconstructorの後に呼び出されます
+   */
   ngOnInit() {
     this.createForm();
   }
 
+  /**
+   * Form の作成と初期値設定をします
+   */
   createForm(): void {
-    // Form の作成と初期値設定をします。
     this.todoForm = this.formBuilder.group({
-      title: ['',
-        [
-          Validators.required
-        ]
+      title: [
+        '', [Validators.required]
       ],
       description: [''],
       date: [''],
@@ -41,7 +58,6 @@ export class TodoComponent implements OnInit {
     });
   }
 
-  // todoItem を 保存します
   onSaveTodoItem(): void {
     const item: TodoItem = {
       title: this.todoForm.get('title').value,
@@ -57,16 +73,13 @@ export class TodoComponent implements OnInit {
 
     this.itemList.push(item);
     this.clearForm();
-    console.log(this.itemList);
   }
 
-  // フォームの値をリセット
   clearForm(): void {
     this.todoForm.reset();
   }
 
-  // 指定した要素を削除
-  onDeleteItem(index: number): void {
-    this.itemList.splice(index, 1);
+  onDeleteItem(item: TodoItem): void {
+    this.itemList = this.itemList.filter(i => i !== item);
   }
 }
