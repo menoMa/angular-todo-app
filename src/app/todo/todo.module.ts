@@ -7,6 +7,9 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TodoRoutingModule } from './todo-routing.module';
 import { TodoComponent } from './todo/todo.component';
 
+/**
+ * Todo機能をもつモジュールです
+ */
 @NgModule({
   imports: [
     CommonModule,
