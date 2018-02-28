@@ -14,23 +14,11 @@ export class TodoService {
   ) { }
 
   private baseUrl = 'http://localhost:3000/api/v1/todo/';
-  private list: any;
-
-  todoList() {
-    return this.list;
-  }
 
   // TodoリストをDBから取得する
-  fetchAll(): Promise<Array<TodoItem>> {
+  fetchAll(): Promise<any> {
     const url = this.baseUrl;
-    return this.http.get(url).toPromise().then((todoList) => {
-
-      this.list = todoList;
-      return Promise.resolve(this.list);
-    }).catch((error) => {
-      throw new Error(error);
-    });
-
+    return this.http.get(url).toPromise();
   }
 
   // todoを作成してDBに登録する
@@ -61,7 +49,6 @@ export class TodoService {
 
   // todoを削除する
   deleteTodo(todoId: string): Promise<any> {
-    this.list = this.list.filter((todo) => todo._id !== todoId);
     const url = this.baseUrl + 'delete/' + todoId;
 
     return this.http.delete(url).toPromise();

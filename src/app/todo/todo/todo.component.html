@@ -37,5 +37,5 @@
 
 <div class="col-12 itemListArea ">
   <!-- todoリスト表示 -->
-  <app-todo-list *ngFor="let item of this.todoService.todoList()" [todo]="item"></app-todo-list>
+  <app-todo-list *ngFor="let item of this.itemList" [todo]="item" (updateTodoState)="onUpdateTodo($event)" (deleteTodo)="onDeleteItem($event)"></app-todo-list>
 </div>

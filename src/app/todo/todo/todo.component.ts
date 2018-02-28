@@ -14,7 +14,7 @@ export class TodoComponent implements OnInit {
   // 詳細入力フォームが表示されているか
   public hasDetail = false;
   // アイテムリスト
-  // public itemList: Array<TodoItem> = new Array<TodoItem>();
+  public itemList: Array<TodoItem> = new Array<TodoItem>();
   // 入力フォーム
   public todoForm: FormGroup;
 
@@ -25,7 +25,8 @@ export class TodoComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.todoService.fetchAll();
+    this.todoService.fetchAll()
+      .then(list => this.itemList = list);
   }
 
   createForm(): void {
@@ -59,14 +60,13 @@ export class TodoComponent implements OnInit {
       console.log(data);
       item._id = data.id;
 
-      this.todoService.todoList().push(item);
+      this.itemList.push(item);
       this.clearForm();
     });
   }
 
   // 完了/未完了の状態を更新
-  updateIsComplete(item: TodoItem): void {
-    item.isComplete = !item.isComplete;
+  onUpdateTodo(item: TodoItem): void {
     this.todoService.updateTodo(item);
   }
 
@@ -78,5 +78,6 @@ export class TodoComponent implements OnInit {
   // 指定した要素を削除
   onDeleteItem(item: TodoItem): void {
     this.todoService.deleteTodo(item._id);
+    this.itemList = this.itemList.filter(todo => todo !== item);
   }
 }
