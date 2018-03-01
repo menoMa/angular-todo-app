@@ -65,7 +65,7 @@ export class TodoComponent implements OnInit {
     });
   }
 
-  // 完了/未完了の状態を更新
+  // todoアイテムの状態を更新
   onUpdateTodo(item: TodoItem): void {
     this.todoService.updateTodo(item);
   }

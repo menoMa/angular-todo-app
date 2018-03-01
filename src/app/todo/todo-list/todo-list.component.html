@@ -1,14 +1,14 @@
 <div *ngIf="!isEdit">
   <div class="row border itme-header">
     <label class=" col-1 custom-control custom-checkbox ">
-      <input class="custom-control-input " type="checkbox " [checked]="todo.isComplete " (click)="updateIsComplete(todo) ">
+      <input class="custom-control-input " type="checkbox " [checked]="todo.isComplete " (click)="updateIsComplete() ">
       <span class="custom-control-indicator "></span>
     </label>
     <div class="col-9 title " (click)="isOpend=!isOpend " [class.isComplete]="todo.isComplete ">
       {{todo.title}}
     </div>
-    <button type="button" class="col-1 btn btn-info btn-sm" (click)="isEdit = !isEdit">編集</button>
-    <button type="button " class="close col-1 " aria-label="Close " (click)="onDeleteItem(todo) ">
+    <button type="button" class="col-1 btn btn-info btn-sm" (click)="onChangeEdit()">編集</button>
+    <button type="button " class="close col-1 " aria-label="Close " (click)="onDeleteItem() ">
       <span aria-hidden="true ">&times;</span>
     </button>
   </div>
@@ -25,29 +25,32 @@
   </div>
 
 </div>
-<div *ngIf="isEdit">
+<div *ngIf="isEdit" [formGroup]="todoEdit">
   <div class="row border itme-header">
     <label class=" col-1 custom-control custom-checkbox ">
-      <input class="custom-control-input " type="checkbox " [checked]="todo.isComplete " (click)="updateIsComplete(todo) ">
+      <input class="custom-control-input " type="checkbox " [checked]="todo.isComplete " (click)="updateIsComplete() ">
       <span class="custom-control-indicator "></span>
     </label>
     <div class="col-9 title " [class.isComplete]="todo.isComplete ">
-      {{todo.title}}
+      <input id="title" class="form-control" placeholder="Title" formControlName="title" />
     </div>
-    <button type="button" class="col-1 btn btn-info btn-sm" (click)="isEdit = !isEdit">保存</button>
-    <button type="button " class="close col-1 " aria-label="Close " (click)="onDeleteItem(todo) ">
+    <button type="button" class="col-1 btn btn-danger btn-sm" (click)="onChangeEdit()">取消</button>
+    <button type="button " class="close col-1 " aria-label="Close " (click)="onDeleteItem() ">
       <span aria-hidden="true ">&times;</span>
     </button>
   </div>
 
-  <div class="row border ">
+  <div class="row border " [formGroup]="todoEdit">
     <div class="col-12 ">
       <strong>詳細：</strong>
-      <pre>{{todo.description ? todo.description : "- "}}</pre>
+      <textarea id="text" class="form-control" formControlName="description"></textarea>
     </div>
     <div class="col-12 ">
       <strong>日付：</strong>
-      <span>{{todo.date ? todo.date : "- "}}</span>
+      <input type="date" class="form-control" formControlName="date" />
+    </div>
+    <div class="col-12 save-button">
+      <button class="btn btn-success"[disabled]="this.todoEdit.invalid"  (click)="onEditTodo()">保存</button>
     </div>
   </div>
 
