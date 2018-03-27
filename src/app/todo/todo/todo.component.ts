@@ -26,7 +26,10 @@ export class TodoComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.todoService.fetchAll()
-      .then(list => this.itemList = list);
+      .then(list => this.itemList = list)
+      .catch(() => {
+        console.error('ToDoリスト取得に失敗しました');
+      });
   }
 
   createForm(): void {
