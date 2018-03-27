@@ -1,10 +1,7 @@
 <div *ngIf="!isEdit">
   <div class="row border itme-header">
-    <label class=" col-1 custom-control custom-checkbox ">
-      <input class="custom-control-input " type="checkbox " [checked]="todo.isComplete " (click)="updateIsComplete() ">
-      <span class="custom-control-indicator "></span>
-    </label>
-    <div class="col-9 title " (click)="isOpend=!isOpend " [class.isComplete]="todo.isComplete ">
+    <span class="col-1 checkbox01-parts" [class.todoChecked]="todo.isComplete" (click)="updateIsComplete() "></span>
+    <div class="col-9 title " (click)="isOpend=!isOpend " [class.isComplete]="todo.isComplete">
       {{todo.title}}
     </div>
     <button type="button" class="col-1 btn btn-info btn-sm" (click)="onChangeEdit()">編集</button>
@@ -27,10 +24,7 @@
 </div>
 <div *ngIf="isEdit" [formGroup]="todoEdit">
   <div class="row border itme-header">
-    <label class=" col-1 custom-control custom-checkbox ">
-      <input class="custom-control-input " type="checkbox " [checked]="todo.isComplete " (click)="updateIsComplete() ">
-      <span class="custom-control-indicator "></span>
-    </label>
+    <span class="col-1 checkbox01-parts" [class.todoChecked]="todo.isComplete" (click)="updateIsComplete() "></span>
     <div class="col-9 title " [class.isComplete]="todo.isComplete ">
       <input id="title" class="form-control" placeholder="Title" formControlName="title" />
     </div>
@@ -50,7 +44,7 @@
       <input type="date" class="form-control" formControlName="date" />
     </div>
     <div class="col-12 save-button">
-      <button class="btn btn-success"[disabled]="this.todoEdit.invalid"  (click)="onEditTodo()">保存</button>
+      <button class="btn btn-success" [disabled]="this.todoEdit.invalid" (click)="onEditTodo()">保存</button>
     </div>
   </div>
 

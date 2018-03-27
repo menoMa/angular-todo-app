@@ -13,7 +13,7 @@ export class TodoService {
     private http: HttpClient
   ) { }
 
-  private baseUrl = 'http://localhost:3000/api/v1/todo/';
+  private baseUrl = 'https://us-central1-test-app-2f239.cloudfunctions.net/todoApi/';
 
   // TodoリストをDBから取得する
   fetchAll(): Promise<any> {
@@ -23,12 +23,14 @@ export class TodoService {
 
   // todoを作成してDBに登録する
   createTodo(todo: TodoItem): Promise<any> {
-    const url = this.baseUrl + 'new';
+    const url = this.baseUrl;
 
     const body = {
-      title: todo.title,
-      description: todo.description,
-      date: todo.date
+      todo: {
+        title: todo.title,
+        description: todo.description,
+        date: todo.date
+      }
     };
 
     return this.http.post(url, body).toPromise();
@@ -36,21 +38,24 @@ export class TodoService {
 
   // todo を更新する
   updateTodo(todo: TodoItem): Promise<any> {
-    const url = this.baseUrl + 'update/' + todo._id;
+    const url = this.baseUrl;
 
     const body = {
-      title: todo.title,
-      description: todo.description,
-      date: todo.date,
-      isComplete: todo.isComplete
+      todo: {
+        _id: todo._id,
+        title: todo.title,
+        description: todo.description,
+        date: todo.date,
+        isComplete: todo.isComplete
+      }
     };
     return this.http.put(url, body).toPromise();
   }
 
   // todoを削除する
   deleteTodo(todoId: string): Promise<any> {
-    const url = this.baseUrl + 'delete/' + todoId;
+    const url = this.baseUrl + todoId;
 
-    return this.http.delete(url).toPromise();
+    return this.http.get(url).toPromise();
   }
 }
